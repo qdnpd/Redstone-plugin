@@ -19,7 +19,7 @@ namespace MCGalaxy
 
             public new static void addDefinitions()
             {
-                loadDefinition("RedstoneBlock.json", typeof(RedstoneBlock));
+                baseID = loadDefinition("RedstoneBlock.json", typeof(RedstoneBlock));
             }
 
             public override ushort getSignal() {

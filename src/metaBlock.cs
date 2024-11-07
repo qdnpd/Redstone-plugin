@@ -16,6 +16,8 @@ namespace MCGalaxy
             public bool updateOnTick = false;
             public string name = "none";
 
+            public static BlockID baseID;
+
             public MetaBlock(int block, CustomLevel level, BlockID id) {
                 this.index = block;
                 this.level = level;

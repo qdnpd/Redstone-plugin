@@ -28,6 +28,7 @@ namespace MCGalaxy
             {
                 ACTIVE_ID = loadDefinition("RedstoneTorchActive.json", typeof(RedstoneTorch));
                 INACTIVE_ID = loadDefinition("RedstoneTorchInactive.json", typeof(RedstoneTorch));
+                baseID = ACTIVE_ID;
             }
 
             public override ushort getSignal()

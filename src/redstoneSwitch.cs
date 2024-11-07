@@ -55,6 +55,7 @@ namespace MCGalaxy
             {
                 Repeater.ACTIVE_ID = loadDefinition(Repeater.defPath_Active, typeof(Repeater));
                 Repeater.INACTIVE_ID = loadDefinition(Repeater.defPath_Inactive, typeof(Repeater));
+                baseID = ACTIVE_ID;
             }
 
             public override ushort getSignal()
@@ -106,6 +107,7 @@ namespace MCGalaxy
             {
                 Switch.ACTIVE_ID = loadDefinition(Switch.defPath_Active, typeof(Switch));
                 Switch.INACTIVE_ID = loadDefinition(Switch.defPath_Inactive, typeof(Switch));
+                baseID = ACTIVE_ID;
             }
 
             public override ushort getSignal()
@@ -151,6 +153,7 @@ namespace MCGalaxy
             {
                 ACTIVE_ID = loadDefinition(defPath_Active, typeof(Plate));
                 INACTIVE_ID = loadDefinition(defPath_Inactive, typeof(Plate));
+                baseID = ACTIVE_ID;
             }
 
             public override ushort getSignal()

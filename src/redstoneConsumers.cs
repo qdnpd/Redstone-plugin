@@ -20,6 +20,7 @@ namespace MCGalaxy
             {
                 ACTIVE_ID = loadDefinition("RedstoneLampActive.json", typeof(RedstoneLamp));
                 INACTIVE_ID = loadDefinition("RedstoneLampInactive.json", typeof(RedstoneLamp));
+                baseID = ACTIVE_ID;
             }
 
             public override void update()

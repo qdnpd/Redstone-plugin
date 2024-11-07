@@ -13,6 +13,7 @@ namespace MCGalaxy
         {
             public Level level;
             public List<int> updateNeededBlocks;
+            public List<int> ignoredBlocks = new List<int>();
             public bool updating;
 
             public Dictionary<int, MetaBlock> metaBlocks = new Dictionary<int, MetaBlock>();
@@ -31,6 +32,10 @@ namespace MCGalaxy
 
             public void delayUpdateBlock(int block) {
                 updateNeededBlocks.Add(block);
+            }
+
+            public void ignoreBlock(int index) {
+                ignoredBlocks.Add(index);
             }
 
             public void everyNeighboringBlock(int block, Action<MetaBlock> callMe)
@@ -90,13 +95,22 @@ namespace MCGalaxy
 
             public void updateBlocks()
             {
+                Console.WriteLine("update BEGIN");
                 List<int> list = new List<int>(updateNeededBlocks);
                 updateNeededBlocks.Clear();
+                ignoredBlocks.Clear();
 
                 foreach(var block in list) {
+                    if(ignoredBlocks.Contains(block)) {
+                        ignoredBlocks.Remove(block);
+                        continue;
+                    }
+
                     MetaBlock instance = getMetaBlock(block);
                     instance.update();
                 }
+
+                Console.WriteLine("update END");
             }
 
             public void update()

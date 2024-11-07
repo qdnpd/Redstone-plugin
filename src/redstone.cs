@@ -52,7 +52,7 @@ namespace MCGalaxy
             OnBlockChangedEvent.Register(OnBlockChanged, Priority.Low);
             OnLevelLoadedEvent.Register(OnLevelLoaded, Priority.High);
             //OnPlayerMoveEvent.Register(OnPlayerMove, Priority.High);
-            OnPlayerClickEvent.Register(OnPlayerClick, Priority.High);
+            OnPlayerClickEvent.Register(OnPlayerClick, Priority.Low);
 
             RedstoneWire.addDefinitions();
             RedstoneBlock.addDefinitions();
@@ -60,6 +60,11 @@ namespace MCGalaxy
             RedstoneLamp.addDefinitions();
             Switch.addDefinitions();
             Repeater.addDefinitions();
+
+            #if SURVIVAL
+            Console.WriteLine("works!!!!!!!!!!!!!!!!!!!!");
+            configureSurvival();
+            #endif
 
             levels[Server.mainLevel] = new CustomLevel(Server.mainLevel);
         }
@@ -79,6 +84,7 @@ namespace MCGalaxy
 
             if(RedstoneWire.isRedstone(level.level.FastGetBlock(x, (ushort)(y-1), z)) &&
                RedstoneWire.isRedstone(block) && placing) {
+                p.RevertBlock(x,y,z);
                 cancel = true;
                 return;
             }
@@ -99,6 +105,9 @@ namespace MCGalaxy
 
         public void OnBlockChanged(Player p, ushort x, ushort y, ushort z, ChangeResult result)
         {
+            if(p == Player.Console) {
+                return;
+            }
             CustomLevel level = levels[p.level];
             int index = p.level.PosToInt(x,y,z);
             MetaBlock instance = level.getMetaBlock(index);

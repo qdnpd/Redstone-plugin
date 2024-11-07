@@ -24,6 +24,7 @@ namespace MCGalaxy
                 var def = loadDefinitionFromFile("RedstoneWire.json");
                 ushort baseTexture = config.REDSTONE_BASE_WIRE_TEXTURE;
 
+                baseID        = config.START_ID;
                 HOR_STARTID   = config.START_ID;
                 VER_STARTID   = (ushort)(config.START_ID+16);
                 CROSS_STARTID = (ushort)(config.START_ID+32);
