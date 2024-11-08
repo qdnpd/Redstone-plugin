@@ -32,7 +32,7 @@ namespace MCGalaxy
             // recipes
 
             // redstone block = redstone dust * 4
-            addCraftingRecipe(RedstoneBlock.baseID, 1, false, redstoneDust.baseID, 4);
+            addCraftingRecipe(RedstoneBlock.baseID, 1, false, RedstoneDust.baseID, 4);
         }
 
         void addCraftingRecipe(BlockID product, ushort produced, bool needCraftingTable, params ushort[] ingredients)
@@ -60,8 +60,8 @@ namespace MCGalaxy
             public override void onPlacement() {
                 level.setBlock(index, (BlockID)(config.START_ID+256));
                 level.applyBlockChanges();
-                level.delayUpdateBlock(index);
-                level.update();
+                MetaBlock block = level.getMetaBlock(index);
+                block.onPlacement();
             }
         }
 

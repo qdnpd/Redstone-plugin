@@ -1,10 +1,10 @@
 #!/bin/bash
 
-csc /target:library /r:MCGalaxy_.dll /r:simplesurvival.dll /r:door.dll /out:bin/XRedstone.dll /define:SURVIVAL src/*.cs
+csc /target:library /r:MCGalaxy_.dll /r:simplesurvival.dll /r:door.dll /out:bin/SurvivalRedstone.dll /define:SURVIVAL src/*.cs
 
-for file in dat/*
+for file in dat/survival/*
 do
-    if [ "$file" = "dat/config.json" ]
+    if [ "$file" = "dat/survival/config.json" ]
     then
         cp $file bin/Redstone/
     else
