@@ -136,6 +136,16 @@ namespace MCGalaxy
                 ushort signal = (getSignal() > 0) ? (ushort)0 : (ushort)16;
                 setSignal(signal);
             }
+
+            public override void onDisplacement()
+            {
+                level.updateBasesOfNeighboringWires(index);
+                level.ignoreSignalFromThisBlock = index;
+                level.setNeighborWiresToZero(index);
+                level.delayUpdateOfNeighbors(index);
+                level.update();
+                level.ignoreSignalFromThisBlock = 0;
+            }
         }
 
         public class Plate : SignalSwitchBlock

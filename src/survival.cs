@@ -79,16 +79,12 @@ namespace MCGalaxy
 
             public override void update()
             {
-                Console.WriteLine("updating door");
-
                 ushort x,y,z;
                 level.level.IntToPos(index, out x, out y, out z);
                 bool active = (maxNearbySignal() > 0) ? true : false;
-                Console.WriteLine($"is active: {active}");
 
                 if(active) {
                     Door.OpenDoor(level.level, x,y,z);
-                    Console.WriteLine("opening door");
 
                     // try to cancel update of block of the common structure
                     int yo; //ffset

@@ -1,15 +1,24 @@
 #!/bin/bash
 
-csc /target:library /r:MCGalaxy_.dll /r:simplesurvival.dll /r:door.dll /out:bin/SurvivalRedstone.dll /define:SURVIVAL src/*.cs
+if [[ "$1" = "survival" ]]
+then
+    DIR="survival"
+    OPTIONS="/r:simplesurvival.dll /r:door.dll /out:bin/SurvivalRedstone.dll /define:SURVIVAL "
+else
+    DIR="default"
+    OPTIONS="/out:bin/Redstone.dll"
+fi
 
-for file in dat/survival/*
+csc /target:library /r:MCGalaxy_.dll $OPTIONS src/*.cs
+
+for file in dat/$DIR/*
 do
-    if [ "$file" = "dat/survival/config.json" ]
+    if [ "$file" = "dat/$DIR/config.json" ]
     then
-        cp $file bin/Redstone/
+        rsync -a $file bin/$DIR/Redstone/
     else
-        cp $file bin/Redstone/Data
+        rsync -a $file bin/$DIR/Redstone/Data
     fi
 done
 
-cp -r bin/* ~/server/MCGalaxy/plugins
+#cp -r bin/* ~/server/MCGalaxy/plugins

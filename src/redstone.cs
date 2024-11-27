@@ -18,7 +18,7 @@ namespace MCGalaxy
         public override string MCGalaxy_Version { get { return "1.9.1.2"; } }
         public override int build { get { return 1; } }
         public override string welcome { get { return ""; } }
-        public override string creator { get { return "none"; } }
+        public override string creator { get { return ""; } }
         public override bool LoadAtStartup { get { return true; } }
 
         private static BlockID definitionGlobalID;
@@ -62,7 +62,6 @@ namespace MCGalaxy
             Repeater.addDefinitions();
 
             #if SURVIVAL
-            Console.WriteLine("works!!!!!!!!!!!!!!!!!!!!");
             configureSurvival();
             #endif
 
