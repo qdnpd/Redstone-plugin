@@ -15,8 +15,8 @@ namespace MCGalaxy
              {{0,0,0}, {1,0,1}, {0,1,0}},
              {{0,0,0}, {0,1,0}, {0,0,0}}};
 
-            private static BlockID ACTIVE_ID;
-            private static BlockID INACTIVE_ID;
+            public static BlockID ACTIVE_ID;
+            public static BlockID INACTIVE_ID;
 
             public override bool hasData {get;} = true;
             private int updateNum = 0;

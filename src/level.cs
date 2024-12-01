@@ -95,7 +95,6 @@ namespace MCGalaxy
 
             public void updateBlocks()
             {
-                Console.WriteLine("update BEGIN");
                 List<int> list = new List<int>(updateNeededBlocks);
                 updateNeededBlocks.Clear();
                 ignoredBlocks.Clear();
@@ -109,8 +108,6 @@ namespace MCGalaxy
                     MetaBlock instance = getMetaBlock(block);
                     instance.update();
                 }
-
-                Console.WriteLine("update END");
             }
 
             public void update()

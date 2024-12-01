@@ -16,7 +16,7 @@ namespace MCGalaxy
     {
         public override string name { get { return "redstone"; } }
         public override string MCGalaxy_Version { get { return "1.9.1.2"; } }
-        public override int build { get { return 1; } }
+        public override int build { get { return 3; } }
         public override string welcome { get { return ""; } }
         public override string creator { get { return ""; } }
         public override bool LoadAtStartup { get { return true; } }
@@ -79,6 +79,7 @@ namespace MCGalaxy
 
         public void OnBlockChanging(Player p, ushort x, ushort y, ushort z, BlockID block, bool placing, ref bool cancel)
         {
+            cancel = false;
             CustomLevel level = levels[p.level];
 
             if(RedstoneWire.isRedstone(level.level.FastGetBlock(x, (ushort)(y-1), z)) &&
@@ -87,11 +88,18 @@ namespace MCGalaxy
                 cancel = true;
                 return;
             }
-            cancel = false;
 
             if(placing) {
-
+                #if SURVIVAL
+                if(block < config.START_ID+256)
+                    cancel = true;
+                else
+                    cancel = false;
+                #else
+                cancel = false;
+                #endif
             }
+
             else {
                 int index = p.level.PosToInt(x,y,z);
                 MetaBlock instance = level.getMetaBlock(index);

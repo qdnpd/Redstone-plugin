@@ -66,6 +66,18 @@ namespace MCGalaxy
             public DefaultBlock(int block, CustomLevel level, BlockID id) : base(block, level, id) {}
         }
 
+        public class AirBlock : MetaBlock
+        {
+            public AirBlock(int block, CustomLevel level, BlockID id) : base(block, level, id) {}
+
+            public override void onPlacement()
+            {
+                level.updateBasesOfNeighboringWires(index);
+                level.delayUpdateOfNeighbors(index);
+                level.update();
+            }
+        }
+
 
         public abstract class SensitiveToSignalBlock : MetaBlock
         {
@@ -153,6 +165,16 @@ namespace MCGalaxy
                         }
 
                 return max;
+            }
+
+            public virtual void resetNeighboringBlocks()
+            {
+                level.updateBasesOfNeighboringWires(index);
+                level.ignoreSignalFromThisBlock = index;
+                level.setNeighborWiresToZero(index);
+                level.delayUpdateOfNeighbors(index);
+                level.update();
+                level.ignoreSignalFromThisBlock = 0;
             }
         }
 

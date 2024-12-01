@@ -9,6 +9,9 @@ namespace MCGalaxy
     {
         void configureSurvival()
         {
+            // hack for this version to update neigbors when a block is displaced by mining
+            metaBlocksTypes[0] = typeof(AirBlock);
+
             RedstoneDust.addDefinitions();
             RedstoneDoor.addDefinitions();
 
@@ -24,15 +27,58 @@ namespace MCGalaxy
                 overrideBlock = RedstoneDust.baseID
             };
 
+            SimpleSurvival.BlockMineConfig mineConfigLamp = new SimpleSurvival.BlockMineConfig() {
+                MiningTime = 6,
+                overrideBlock = RedstoneLamp.INACTIVE_ID
+            };
+
+            SimpleSurvival.BlockMineConfig mineConfigRedstoneBlock = new SimpleSurvival.BlockMineConfig() {
+                MiningTime = 15,
+                //overrideBlock = RedstoneBlock.baseID
+                overrideBlock = 208
+            };
+
+            SimpleSurvival.BlockMineConfig mineConfigRepeater = new SimpleSurvival.BlockMineConfig() {
+                MiningTime = 1,
+                overrideBlock = Repeater.INACTIVE_ID
+            };
+
+            SimpleSurvival.BlockMineConfig mineConfigSwitch = new SimpleSurvival.BlockMineConfig() {
+                MiningTime = 6,
+                overrideBlock = Switch.INACTIVE_ID
+            };
+
+            SimpleSurvival.BlockMineConfig mineConfigRedstoneTorch = new SimpleSurvival.BlockMineConfig() {
+                MiningTime = 3,
+                overrideBlock = RedstoneTorch.ACTIVE_ID
+            };
+
             SimpleSurvival.blockMiningTimes[88] = mineConfigRedstoneOre;
+            SimpleSurvival.blockMiningTimes[RedstoneLamp.ACTIVE_ID] = mineConfigLamp;
+            SimpleSurvival.blockMiningTimes[RedstoneLamp.INACTIVE_ID] = mineConfigLamp;
+            SimpleSurvival.blockMiningTimes[Repeater.ACTIVE_ID] = mineConfigRepeater;
+            SimpleSurvival.blockMiningTimes[Repeater.INACTIVE_ID] = mineConfigRepeater;
+            SimpleSurvival.blockMiningTimes[Switch.ACTIVE_ID] = mineConfigSwitch;
+            SimpleSurvival.blockMiningTimes[Switch.INACTIVE_ID] = mineConfigSwitch;
+            SimpleSurvival.blockMiningTimes[RedstoneTorch.ACTIVE_ID] = mineConfigRedstoneTorch;
+            SimpleSurvival.blockMiningTimes[RedstoneTorch.INACTIVE_ID] = mineConfigRedstoneTorch;
+            //SimpleSurvival.blockMiningTimes[RedstoneBlock.baseID] = mineConfigRedstoneBlock;
+            SimpleSurvival.blockMiningTimes[208] = mineConfigRedstoneBlock;
             for(int i = 0; i < 16*3; i++) {
                 SimpleSurvival.blockMiningTimes[(ushort)(i+config.START_ID)] = mineConfigRedstoneWire;
             }
 
             // recipes
 
-            // redstone block = redstone dust * 4
-            addCraftingRecipe(RedstoneBlock.baseID, 1, false, RedstoneDust.baseID, 4);
+            // redstone block = 2 redstone dust
+            //addCraftingRecipe(RedstoneBlock.baseID, 1, false, RedstoneDust.baseID, 4);
+            addCraftingRecipe(208, 1, false, RedstoneDust.baseID, 4);
+            // lamp = 1 redstone dust + 1 glowstone
+            addCraftingRecipe(RedstoneLamp.INACTIVE_ID, 1, true, RedstoneLamp.INACTIVE_ID, 1, 79, 1);
+            // switch = 1 wood + 4 cobblestone
+            addCraftingRecipe(Switch.INACTIVE_ID, 1, true, 5, 1, 4, 4);
+            // redstone torch = 1 stick + 1 redstone dust
+            addCraftingRecipe(RedstoneTorch.ACTIVE_ID, 1, true, 115, 1, RedstoneDust.baseID, 1);
         }
 
         void addCraftingRecipe(BlockID product, ushort produced, bool needCraftingTable, params ushort[] ingredients)
@@ -99,7 +145,6 @@ namespace MCGalaxy
                 }
                 else {
                     Door.CloseDoor(level.level, x,y,z);
-                    Console.WriteLine("closing door");
                 }
             }
         }

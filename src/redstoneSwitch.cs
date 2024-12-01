@@ -139,12 +139,7 @@ namespace MCGalaxy
 
             public override void onDisplacement()
             {
-                level.updateBasesOfNeighboringWires(index);
-                level.ignoreSignalFromThisBlock = index;
-                level.setNeighborWiresToZero(index);
-                level.delayUpdateOfNeighbors(index);
-                level.update();
-                level.ignoreSignalFromThisBlock = 0;
+                resetNeighboringBlocks();
             }
         }
 

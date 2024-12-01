@@ -10,8 +10,8 @@ namespace MCGalaxy
         {
             public new string name = "Redstone Lamp";
 
-            private static BlockID ACTIVE_ID;
-            private static BlockID INACTIVE_ID;
+            public static BlockID ACTIVE_ID;
+            public static BlockID INACTIVE_ID;
 
 
             public RedstoneLamp(int block, CustomLevel level, BlockID id) : base(block, level, id) {}
