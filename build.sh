@@ -20,5 +20,3 @@ do
         rsync -a $file bin/$DIR/Redstone/Data
     fi
 done
-
-#cp -r bin/* ~/server/MCGalaxy/plugins

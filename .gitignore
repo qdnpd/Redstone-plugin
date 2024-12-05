@@ -2,3 +2,6 @@ bin/
 archive/
 *.dll
 *.zip
+*.gz
+*.sh
+!build.sh

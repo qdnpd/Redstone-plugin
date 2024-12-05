@@ -16,7 +16,7 @@ namespace MCGalaxy
     {
         public override string name { get { return "redstone"; } }
         public override string MCGalaxy_Version { get { return "1.9.1.2"; } }
-        public override int build { get { return 3; } }
+        public override int build { get { return 4; } }
         public override string welcome { get { return ""; } }
         public override string creator { get { return ""; } }
         public override bool LoadAtStartup { get { return true; } }
@@ -90,14 +90,15 @@ namespace MCGalaxy
             }
 
             if(placing) {
-                #if SURVIVAL
-                if(block < config.START_ID+256)
+            #if SURVIVAL
+                BlockID id = block > 60 ? (BlockID)(block - 256) : block;
+                if(sprites.Contains(id))
                     cancel = true;
                 else
                     cancel = false;
-                #else
+            #else
                 cancel = false;
-                #endif
+            #endif
             }
 
             else {

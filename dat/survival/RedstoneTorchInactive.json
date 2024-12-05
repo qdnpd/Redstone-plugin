@@ -1,7 +1,7 @@
 [
     {
         "RawID": 100,
-        "Name": "Redstone torch",
+        "Name": "Redstone torch disactivated",
         "Speed": 1,
         "CollideType": 0,
         "TopTex": 179,

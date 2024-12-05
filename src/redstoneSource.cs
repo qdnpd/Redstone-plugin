@@ -9,6 +9,7 @@ namespace MCGalaxy
         public class RedstoneBlock : SensitiveToSignalBlock
         {
             public new string name = "Redstone Block";
+            public static new BlockID baseID;
             public override bool connectable {get; set;} = true;
             public override int[,,] connectionMap {get; set;} =
             {{{0,0,0}, {0,1,0}, {0,1,0}},

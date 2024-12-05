@@ -1,7 +1,7 @@
 [
     {
             "RawID": 100,
-            "Name": "Repeater",
+            "Name": "Repeater activated",
             "Speed": 1,
             "CollideType": 2,
             "TopTex": 32,

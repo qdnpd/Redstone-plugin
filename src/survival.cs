@@ -7,6 +7,10 @@ namespace MCGalaxy
 {
     public partial class Redstone : Plugin
     {
+        private static List<BlockID> sprites = new List<BlockID>()
+        { 6, 66, 67, 68, 83, 84 };
+
+
         void configureSurvival()
         {
             // hack for this version to update neigbors when a block is displaced by mining
@@ -71,14 +75,13 @@ namespace MCGalaxy
             // recipes
 
             // redstone block = 2 redstone dust
-            //addCraftingRecipe(RedstoneBlock.baseID, 1, false, RedstoneDust.baseID, 4);
-            addCraftingRecipe(208, 1, false, RedstoneDust.baseID, 4);
+            addCraftingRecipe(RedstoneBlock.baseID, 1, false, RedstoneDust.baseID, 2);
             // lamp = 1 redstone dust + 1 glowstone
-            addCraftingRecipe(RedstoneLamp.INACTIVE_ID, 1, true, RedstoneLamp.INACTIVE_ID, 1, 79, 1);
+            addCraftingRecipe(RedstoneLamp.INACTIVE_ID, 1, true, RedstoneDust.baseID, 1, 79, 1);
             // switch = 1 wood + 4 cobblestone
             addCraftingRecipe(Switch.INACTIVE_ID, 1, true, 5, 1, 4, 4);
             // redstone torch = 1 stick + 1 redstone dust
-            addCraftingRecipe(RedstoneTorch.ACTIVE_ID, 1, true, 115, 1, RedstoneDust.baseID, 1);
+            addCraftingRecipe(RedstoneTorch.ACTIVE_ID, 1, false, 115, 1, RedstoneDust.baseID, 1);
         }
 
         void addCraftingRecipe(BlockID product, ushort produced, bool needCraftingTable, params ushort[] ingredients)
@@ -98,6 +101,7 @@ namespace MCGalaxy
         public class RedstoneDust : MetaBlock
         {
             public RedstoneDust(int block, CustomLevel level, BlockID id) : base(block, level, id) {}
+            public static new BlockID baseID;
 
             public new static void addDefinitions() {
                 baseID = loadDefinition("RedstoneDust.json", typeof(RedstoneDust));

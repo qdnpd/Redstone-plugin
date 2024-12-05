@@ -1,7 +1,7 @@
 [
     {
         "RawID": 100,
-        "Name": "Redstone lamp",
+        "Name": "Redstone lamp activated",
         "Speed": 1,
         "CollideType": 2,
         "TopTex": 145,
