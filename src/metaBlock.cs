@@ -66,6 +66,7 @@ namespace MCGalaxy
             public DefaultBlock(int block, CustomLevel level, BlockID id) : base(block, level, id) {}
         }
 
+        #if SURVIVAL
         public class AirBlock : MetaBlock
         {
             public AirBlock(int block, CustomLevel level, BlockID id) : base(block, level, id) {}
@@ -73,10 +74,17 @@ namespace MCGalaxy
             public override void onPlacement()
             {
                 level.updateBasesOfNeighboringWires(index);
-                level.delayUpdateOfNeighbors(index);
+
+                level.everyNeighboringBlock(index, (MetaBlock block) =>
+                {
+                    if(block.mayNeedUpdate() && !isDoor(block.id))
+                        level.delayUpdateBlock(block.index);
+                });
+
                 level.update();
             }
         }
+        #endif
 
 
         public abstract class SensitiveToSignalBlock : MetaBlock

@@ -97,24 +97,21 @@ namespace MCGalaxy
             {
                 List<int> list = new List<int>(updateNeededBlocks);
                 updateNeededBlocks.Clear();
-                ignoredBlocks.Clear();
 
                 foreach(var block in list) {
-                    if(ignoredBlocks.Contains(block)) {
-                        ignoredBlocks.Remove(block);
-                        continue;
-                    }
-
                     MetaBlock instance = getMetaBlock(block);
+                    log(Logtype.DEBUG, $"updating block {blockInfo(block)}");
                     instance.update();
                 }
             }
 
             public void update()
             {
+                log(Logtype.DEBUG, "updating level");
                 updating = true;
 
                 while(updateNeededBlocks.Count > 0) {
+                    log(Logtype.DEBUG, $"update loop, {updateNeededBlocks.Count} blocks to update");
                     updateBlocks();
                 }
 
@@ -125,6 +122,8 @@ namespace MCGalaxy
                     MetaBlock block = entry.Value;
                     block.onEndingUpdateCycle();
                 }
+
+                ignoredBlocks.Clear();
             }
 
             // public void updateCycle()
@@ -211,6 +210,17 @@ namespace MCGalaxy
             public void removeBlockInstance(int block)
             {
                 metaBlocks.Remove(block);
+            }
+
+            public string blockInfo(int index)
+            {
+                ushort x,y,z;
+                level.IntToPos(index, out x, out y, out z);
+                BlockID id = getBlock(index);
+                //string name = level.CustomBlockDefs[id].Name;
+                string name = " ";
+
+                return $"(index: {index}; pos: ({x},{y},{z}); id: {id} ({name}))";
             }
         }
 

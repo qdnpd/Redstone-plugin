@@ -79,6 +79,7 @@ namespace MCGalaxy
 
         public void OnBlockChanging(Player p, ushort x, ushort y, ushort z, BlockID block, bool placing, ref bool cancel)
         {
+            log(Logtype.DEBUG, "event trigerred: OnBlockChanging");
             cancel = false;
             CustomLevel level = levels[p.level];
 
@@ -113,12 +114,14 @@ namespace MCGalaxy
 
         public void OnBlockChanged(Player p, ushort x, ushort y, ushort z, ChangeResult result)
         {
+            log(Logtype.DEBUG, "event trigerred: OnBlockChanged");
             if(p == Player.Console) {
                 return;
             }
             CustomLevel level = levels[p.level];
             int index = p.level.PosToInt(x,y,z);
             MetaBlock instance = level.getMetaBlock(index);
+            log(Logtype.DEBUG, $"block placed: {level.blockInfo(index)}");
             instance.onPlacement();
         }
 
@@ -149,6 +152,7 @@ namespace MCGalaxy
                                            ushort yaw, ushort pitch, byte entity,
                                            ushort x, ushort y, ushort z, TargetBlockFace face)
         {
+            log(Logtype.DEBUG, "event trigerred: OnPlayerClick");
             if(action == MouseAction.Pressed && button == MouseButton.Right)
             {
                 if(p.level.IsAirAt(x,y,z))
@@ -157,7 +161,6 @@ namespace MCGalaxy
                 CustomLevel level = levels[p.level];
                 int index = p.level.PosToInt(x,y,z);
                 MetaBlock block = level.getMetaBlock(index);
-
                 block.onClick();
             }
         }
@@ -191,6 +194,23 @@ namespace MCGalaxy
                 def.FrontTex = texture;
             if(def.BackTex != blankTexture)
                 def.BackTex = texture;
+        }
+
+        private enum Logtype {
+            LOG, DEBUG, ERROR
+        }
+
+        private static string[] logtype_names = {"log", "debug", "error"};
+
+        private static void log(Logtype type, string message)
+        {
+            #if !DEBUG
+            if(type == Logtype.DEBUG)
+                return;
+            #endif
+
+            string type_name = logtype_names[(int)type];
+            Console.WriteLine($"[{type_name}] {message}");
         }
     }
 }

@@ -121,9 +121,14 @@ namespace MCGalaxy
 
             public new static void addDefinitions()
             {
-                for(int i = 0; i < 3*8; i++) {
-                    BlockID id = (BlockID)(300+i+256);
-                    metaBlocksTypes[id] = typeof(RedstoneDoor);
+                for(int i = 0; i < 3; i++) {
+                    for(int j = 0; j < 8; j++) {
+                        if(j == 0 || j == 1 || j == 4 || j == 5)
+                            continue;
+
+                        BlockID id = (BlockID)(300+(i*8)+j+256);
+                        metaBlocksTypes[id] = typeof(RedstoneDoor);
+                    }
                 }
             }
 
@@ -151,6 +156,12 @@ namespace MCGalaxy
                     Door.CloseDoor(level.level, x,y,z);
                 }
             }
+        }
+
+        public static bool isDoor(BlockID id)
+        {
+            id -= (BlockID)300+256;
+            return (id >= 0 && id <= 3*8);
         }
     }
 }
