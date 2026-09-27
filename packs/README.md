@@ -16,6 +16,7 @@ references, on a fully transparent atlas, so it can be pasted into
 |------|-------|-----------|--------|
 | `16x/terrain.png`  | 256×256 | 16 px | Standard / CC-default style packs |
 | `32x/terrain.png`  | 512×512 | 32 px | Faithful-style 32x packs (e.g. Royalty³) |
+| `16x/clear-mask.png` / `32x/clear-mask.png` | — | — | Helper for the one-liner install below: opaque everywhere *except* the redstone tiles |
 
 Both files contain **only** these twenty tiles (everything else is
 fully transparent, alpha 0):
@@ -35,7 +36,40 @@ fully transparent, alpha 0):
 | 123     | Repeater — off |
 | 124     | Repeater — on |
 
-## How to install (paste into your pack)
+## How to install
+
+**Option A** (one-liner, ImageMagick + zip) is below and recommended if
+you have those tools; **Option B** is the manual GUI route.
+
+### Option A — one-liner (ImageMagick + zip, no GUI)
+
+Replaces the redstone tiles in your pack's `terrain.png` in place,
+clearing whatever was there before (so old/garbled redstone art from
+the base pack doesn't ghost through the overlay's transparent pixels):
+
+```sh
+# 16x packs (default.zip, classicube.zip):
+P=default.zip; S=16x
+# 32x packs (e.g. Royalty3):
+# P=royalty3.zip; S=32x
+
+T=$(mktemp -d) && unzip -p "$P" terrain.png \
+  | convert - "$S/clear-mask.png" -compose DstIn -composite \
+            "$S/terrain.png" -compose over -composite "$T/terrain.png" \
+  && ( cd "$T" && zip -X -q "$OLDPWD/$P" terrain.png ) && rm -rf "$T"
+```
+
+Notes:
+
+- `$P` must be a **relative** path or the `zip` step stores the file
+  under the wrong name; `cd "$T"` + `$OLDPWD` handles that.
+- `zip -X -q` updates the existing `terrain.png` entry in place and
+  leaves every other entry (pack.mcmeta, particles.png, …) untouched.
+- The mask is what makes this a true *replace* rather than a plain
+  overlay: without it, pixels the overlay leaves transparent keep the
+  pack's old redstone art underneath.
+
+### Option B — manual (image editor)
 
 1. Pick the file that matches your pack's tile size
    (16 px or 32 px).
