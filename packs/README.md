@@ -49,14 +49,18 @@ fully transparent, alpha 0):
 
 ## Where the textures come from
 
-All six tiles are **100% vanilla Minecraft 1.6.4** textures,
-pixel-for-pixel (verified by comparison against the original 1.6.4
-`terrain.png`):
+All six tiles are based on **vanilla Minecraft 1.6.4** textures
+(verified by comparison against the original 1.6.4 `terrain.png`):
 
 - Lever off/on  ← `blocks/lever.png`
 - Torch off/on  ← `blocks/redstone_torch_off.png` / `redstone_torch_on.png`
 - Torch caps    ← `blocks/redstone_torch_on.png` / `redstone_torch_off.png`
   (the 4×4 top-cap detail)
+
+Five of the six tiles are pixel-for-pixel identical to vanilla. Tile 121
+(torch off) has a small addition: the top row of the stick (2 px at 16x,
+8 px at 32x) is filled with the stick's own brown so the torch top is not
+see-through. No other pixels differ from vanilla.
 
 Per the [Minecraft Usage Guidelines](https://www.minecraft.net/en-us/usage-guidelines),
 this is a non-commercial fan work.
