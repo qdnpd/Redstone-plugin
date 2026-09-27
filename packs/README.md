@@ -56,8 +56,12 @@ P=default.zip; S=16x
 T=$(mktemp -d) && unzip -p "$P" terrain.png \
   | convert - "$S/clear-mask.png" -compose DstIn -composite \
             "$S/terrain.png" -compose over -composite "$T/terrain.png" \
-  && ( cd "$T" && zip -X -q "$OLDPWD/$P" terrain.png ) && rm -rf "$T"
+  && zip -jq "$P" "$T/terrain.png" && rm -rf "$T"
 ```
+
+(`-j` stores the file as `terrain.png` so `zip` *replaces* the existing
+entry instead of adding a second one; `-q` is quiet. `convert` is
+ImageMagick 6 — on ImageMagick 7 use `magick` instead.)
 
 Notes:
 
