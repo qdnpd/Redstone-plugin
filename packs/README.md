@@ -6,8 +6,9 @@ MCGalaxy / ClassiCube. The plugin ships block *definitions* (the JSONs in
 `dat/`) but **no textures**, so redstone torches and levers render as
 missing-texture blocks unless your texture pack already provides them.
 
-This overlay provides just the six redstone tiles, on a fully transparent
-atlas, so it can be pasted into **any** pack without disturbing the rest.
+This overlay provides the **full set of redstone tiles** the plugin
+references, on a fully transparent atlas, so it can be pasted into
+**any** pack without disturbing the rest.
 
 ## What's here
 
@@ -16,17 +17,23 @@ atlas, so it can be pasted into **any** pack without disturbing the rest.
 | `16x/terrain.png`  | 256×256 | 16 px | Standard / CC-default style packs |
 | `32x/terrain.png`  | 512×512 | 32 px | Faithful-style 32x packs (e.g. Royalty³) |
 
-Both files contain **only** these six tiles (everything else is
+Both files contain **only** these twenty tiles (everything else is
 fully transparent, alpha 0):
 
-| Tile | Block face |
-|------|-----------|
-| 117  | Lever (switch) — off |
-| 118  | Lever (switch) — on |
-| 119  | Redstone torch cap — off |
-| 120  | Redstone torch cap — on |
-| 121  | Redstone torch side — off |
-| 122  | Redstone torch side — on |
+| Tile(s) | Block face |
+|---------|-----------|
+| 87–95   | Redstone wire / dust (9 connection states) |
+| 114     | Redstone block |
+| 115     | Redstone lamp — off |
+| 116     | Redstone lamp — on |
+| 117     | Lever (switch) — off |
+| 118     | Lever (switch) — on |
+| 119     | Redstone torch cap — off |
+| 120     | Redstone torch cap — on |
+| 121     | Redstone torch side — off |
+| 122     | Redstone torch side — on |
+| 123     | Repeater — off |
+| 124     | Repeater — on |
 
 ## How to install (paste into your pack)
 
@@ -36,9 +43,9 @@ fully transparent, alpha 0):
    `classicube.zip`, or your custom pack folder) in an image editor
    that supports layers / alpha.
 3. Open the matching overlay `terrain.png` here as a new layer on top.
-4. Because the overlay is transparent everywhere except the six tiles,
-   you can simply **merge / flatten** it onto your atlas — only the six
-   redstone tiles change, every other tile is untouched.
+4. Because the overlay is transparent everywhere except the redstone
+   tiles, you can simply **merge / flatten** it onto your atlas — only
+   the redstone tiles change, every other tile is untouched.
 5. Save your pack's `terrain.png` **as PNG with alpha** (do not save as
    RGB / JPEG, or the transparency is destroyed).
 6. Restart MCGalaxy / ClassiCube.
@@ -49,18 +56,24 @@ fully transparent, alpha 0):
 
 ## Where the textures come from
 
-All six tiles are based on **vanilla Minecraft 1.6.4** textures
-(verified by comparison against the original 1.6.4 `terrain.png`):
+All twenty tiles are based on **vanilla Minecraft 1.6.4** textures
+(verified by comparison against the original 1.6.4 client assets):
 
-- Lever off/on  ← `blocks/lever.png`
-- Torch off/on  ← `blocks/redstone_torch_off.png` / `redstone_torch_on.png`
-- Torch caps    ← `blocks/redstone_torch_on.png` / `redstone_torch_off.png`
-  (the 4×4 top-cap detail)
+| Tile(s) | Source |
+|---------|--------|
+| 87–95   | `blocks/redstone_dust_line.png` — the vanilla dust shape, recolored red (vanilla ships it white/gray and tints it red at runtime; the mod's wire needs the red baked in). The nine tiles are the same art at different brightness levels for the connection states. |
+| 114     | `blocks/redstone_block.png` — pixel-for-pixel |
+| 115     | `blocks/redstone_lamp_off.png` — pixel-for-pixel |
+| 116     | `blocks/redstone_lamp_on.png` — pixel-for-pixel |
+| 117/118 | `blocks/lever.png` — pixel-for-pixel |
+| 119/120 | `blocks/redstone_torch_off.png` / `redstone_torch_on.png` (the 4×4 top-cap detail) — pixel-for-pixel |
+| 121/122 | `blocks/redstone_torch_off.png` / `redstone_torch_on.png` (the stick) |
+| 123/124 | `blocks/repeater_off.png` / `repeater_on.png` — pixel-for-pixel |
 
-Five of the six tiles are pixel-for-pixel identical to vanilla. Tile 121
-(torch off) has a small addition: the top row of the stick (2 px at 16x,
-8 px at 32x) is filled with the stick's own brown so the torch top is not
-see-through. No other pixels differ from vanilla.
+Tile 121 (torch off side) is the only tile with an addition: the top
+row of the stick (2 px at 16x, 8 px at 32x) is filled with the stick's
+own brown so the torch top is not see-through. No other pixels differ
+from vanilla anywhere in the set.
 
 Per the [Minecraft Usage Guidelines](https://www.minecraft.net/en-us/usage-guidelines),
 this is a non-commercial fan work.
