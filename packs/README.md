@@ -16,9 +16,10 @@ references, on a fully transparent atlas, so it can be pasted into
 |------|-------|-----------|--------|
 | `16x/terrain.png`  | 256×256 | 16 px | Standard / CC-default style packs |
 | `32x/terrain.png`  | 512×512 | 32 px | Faithful-style 32x packs (e.g. Royalty³) |
-| `16x/clear-mask.png` / `32x/clear-mask.png` | — | — | Helper for the one-liner install below: opaque everywhere *except* the redstone tiles |
+| `16x/clear-mask.png` / `32x/clear-mask.png` | — | — | Helper for the install below: opaque everywhere *except* the redstone tiles |
+| `install.sh` | — | — | One-command installer: finds your pack, detects 16x/32x, backs up, and flattens the overlay in place |
 
-Both files contain **only** these twenty tiles (everything else is
+Both overlays contain **only** these twenty tiles (everything else is
 fully transparent, alpha 0):
 
 | Tile(s) | Block face |
@@ -38,20 +39,40 @@ fully transparent, alpha 0):
 
 ## How to install
 
-**Option A** (one-liner, ImageMagick + zip) is below and recommended if
-you have those tools; **Option B** is the manual GUI route.
+**Option A** (the `install.sh` script) is recommended if you have
+`unzip`, `zip`, and ImageMagick; **Option B** is the manual GUI route.
 
-### Option A — one-liner (ImageMagick + zip, no GUI)
-
-Replaces the redstone tiles in your pack's `terrain.png` in place,
-clearing whatever was there before (so old/garbled redstone art from
-the base pack doesn't ghost through the overlay's transparent pixels):
+### Option A — `install.sh` (no GUI)
 
 ```sh
-# 16x packs (default.zip, classicube.zip):
+sh install.sh
+```
+
+Run it from the directory that holds your pack zip (`default.zip` or
+`classicube.zip`). It:
+
+1. finds your pack zip in the current directory — if neither
+   `default.zip` nor `classicube.zip` is there, it asks for the path;
+2. finds the overlay folder (the `packs/` directory containing `16x/`
+   and `32x/`) — if it's not the current directory, it asks for the
+   path;
+3. detects 16x vs 32x from your pack's own atlas size (256 px → 16x,
+   512 px → 32x);
+4. backs the pack up to `<pack>.bak`, then replaces the redstone tiles
+   in `terrain.png` in place — clearing whatever was there before, so
+   old/garbled redstone art from the base pack can't ghost through the
+   overlay's transparent pixels.
+
+You can also run it from anywhere: `sh /path/to/packs/install.sh` —
+it will prompt for anything it can't find. Needs `unzip`, `zip`,
+ImageMagick (`convert`; use `magick` on ImageMagick 7), and a POSIX
+shell.
+
+### Option A' — the one-liner (what the script does, by hand)
+
+```sh
+# from the directory holding your pack zip; S=16x or 32x
 P=default.zip; S=16x
-# 32x packs (e.g. Royalty3):
-# P=royalty3.zip; S=32x
 
 T=$(mktemp -d) && unzip -p "$P" terrain.png \
   | convert - "$S/clear-mask.png" -compose DstIn -composite \
@@ -63,15 +84,9 @@ T=$(mktemp -d) && unzip -p "$P" terrain.png \
 entry instead of adding a second one; `-q` is quiet. `convert` is
 ImageMagick 6 — on ImageMagick 7 use `magick` instead.)
 
-Notes:
-
-- `$P` must be a **relative** path or the `zip` step stores the file
-  under the wrong name; `cd "$T"` + `$OLDPWD` handles that.
-- `zip -X -q` updates the existing `terrain.png` entry in place and
-  leaves every other entry (pack.mcmeta, particles.png, …) untouched.
-- The mask is what makes this a true *replace* rather than a plain
-  overlay: without it, pixels the overlay leaves transparent keep the
-  pack's old redstone art underneath.
+The mask is what makes this a true *replace* rather than a plain
+overlay: without it, pixels the overlay leaves transparent keep the
+pack's old redstone art underneath.
 
 ### Option B — manual (image editor)
 
